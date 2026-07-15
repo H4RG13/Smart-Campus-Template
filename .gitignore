@@ -1,0 +1,28 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# Node / client
+client/node_modules/
+client/dist/
+
+# Environment / secrets — never commit a real per-school .env
+deploy/.env
+.env
+.env.local
+
+# IDE
+.vs/
+.idea/
+*.swp
+.claude/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db

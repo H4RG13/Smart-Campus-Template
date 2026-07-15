@@ -1,0 +1,22 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY SmartCampus.Template.sln .
+COPY src/SmartCampus.Domain/SmartCampus.Domain.csproj src/SmartCampus.Domain/
+COPY src/SmartCampus.Application/SmartCampus.Application.csproj src/SmartCampus.Application/
+COPY src/SmartCampus.Infrastructure/SmartCampus.Infrastructure.csproj src/SmartCampus.Infrastructure/
+COPY src/SmartCampus.Configuration/SmartCampus.Configuration.csproj src/SmartCampus.Configuration/
+COPY src/SmartCampus.Api/SmartCampus.Api.csproj src/SmartCampus.Api/
+RUN dotnet restore src/SmartCampus.Api/SmartCampus.Api.csproj
+
+COPY src/ src/
+RUN dotnet publish src/SmartCampus.Api/SmartCampus.Api.csproj -c Release -o /app --no-restore
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /app .
+
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "SmartCampus.Api.dll"]
