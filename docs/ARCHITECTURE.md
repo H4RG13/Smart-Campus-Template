@@ -213,11 +213,13 @@ Per-client rollout, architecturally supported as follows:
 
 ## 12. Branching Strategy
 
-- **`main`** — always deployable.
-- **`develop`** (optional, template repo only) — integration branch for unreleased template features; school repos can usually skip this and branch straight off `main`.
-- **`feature/<name>`** — short-lived, merged via PR.
+- **`main`** — always deployable; represents the current released state of the template.
+- **`develop`** — integration branch for template features not yet released. New feature/phase branches (per `RULES.md` #13) branch off `develop` and merge back into it via PR.
+- **`staging`** — pre-release verification branch. `develop` is merged here to validate a batch of features together (e.g. against a staging deployment) before promoting to `release`.
+- **`release`** — the branch cut for an upcoming tagged release; receives final stabilization fixes only (no new feature work), then merges to `main` and gets tagged (`v1.0.0`, `v1.1.0`, ...).
+- **`feature/<name>`** or **`phase-<n>-<name>`** — one branch per feature or `PLAN.md` phase, branched from `develop`. Per `RULES.md` #13, this branch is *reused* for all follow-up commits and review fixes on that same slice of work — a new branch is cut only when starting genuinely new, separable work, not for every small change.
 - **`hotfix/<name>`** — urgent production fix on a school repo, branched from `main`, merged back and tagged.
-- No GitFlow ceremony beyond this — one deployment target per repo makes the multi-environment machinery GitFlow was designed for unnecessary.
+- School repos (cloned from the template) can simplify this down to just `main` + `feature/<name>` + `hotfix/<name>` if a given deployment has no need for staged releases — the full `develop`/`staging`/`release` flow is primarily for the template repo itself, where multiple features are in flight across phases at once.
 
 ## 13. Coding Philosophy
 

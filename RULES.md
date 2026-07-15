@@ -126,6 +126,16 @@ Every rule states **what**, **why**, and **how to check it**.
 
 ---
 
+## 13. One branch per feature/phase; reuse it for follow-up work on the same slice
+
+**Rule:** when starting a new feature or a new `PLAN.md` phase, branch off `develop` (e.g. `feature/attendance-engine`, `phase-2-students-staff`). While that feature/phase is still in progress or under active review, push follow-up commits and fixes to the *same* branch rather than opening a new one for every small change. Only cut a new branch when starting genuinely new, separable work.
+
+**Why:** a fresh branch per typo fix or review comment creates PR sprawl that's harder to review and harder to trace back to "which phase was this part of." Reusing the branch for its whole lifecycle keeps history readable and keeps CI/review effort focused on one moving target at a time.
+
+**How to check:** before running `git checkout -b`, ask whether this is a continuation of work already in flight on an existing branch (reuse it) or the start of a new feature/phase (branch it). When in doubt, check `git branch -a` and the open PRs first.
+
+---
+
 ## Amending this file
 
 These rules encode real trade-offs, each with a stated reason. If a rule is blocking legitimate work, don't bypass it silently — propose the change, update the rule and its rationale here, and make sure `docs/ARCHITECTURE.md` §8/§13/§14 stay consistent with it.
