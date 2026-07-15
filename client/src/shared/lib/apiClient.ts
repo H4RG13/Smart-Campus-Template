@@ -9,11 +9,22 @@ export class ApiError extends Error {
   }
 }
 
+// Set by the auth store on login/logout so apiClient can attach the bearer token
+// without importing the store directly (would create a circular dependency).
+let authTokenProvider: () => string | null = () => null;
+
+export function setAuthTokenProvider(provider: () => string | null) {
+  authTokenProvider = provider;
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = authTokenProvider();
+
   const response = await fetch(`${API_BASE}${path}`, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...init?.headers,
     },
   });

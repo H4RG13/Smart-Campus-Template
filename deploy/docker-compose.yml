@@ -37,6 +37,11 @@ services:
       Iot__HeartbeatIntervalSeconds: ${IOT__HEARTBEATINTERVALSECONDS}
       Iot__OfflineThresholdMultiplier: ${IOT__OFFLINETHRESHOLDMULTIPLIER}
       Jwt__SigningKey: ${JWT_SIGNING_KEY}
+      Jwt__Issuer: ${JWT__ISSUER}
+      Jwt__Audience: ${JWT__AUDIENCE}
+      Jwt__ExpiryMinutes: ${JWT__EXPIRYMINUTES}
+      Seed__AdminEmail: ${SEED__ADMINEMAIL}
+      Seed__AdminPassword: ${SEED__ADMINPASSWORD}
     ports:
       - "8080:8080"
 
