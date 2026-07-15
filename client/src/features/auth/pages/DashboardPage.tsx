@@ -16,13 +16,27 @@ export function DashboardPage() {
           Signed in as <strong>{email}</strong> ({roles.join(', ')})
         </p>
 
-        {hasRole('Admin') && (
-          <p className="mt-4">
-            <Link className="text-[var(--color-primary)] underline" to="/admin">
-              Go to Admin-only page
-            </Link>
-          </p>
-        )}
+        <nav className="mt-6 flex flex-wrap gap-4 text-sm">
+          <Link className="text-[var(--color-primary)] underline" to="/students">
+            Students
+          </Link>
+          {hasRole('Admin') && (
+            <>
+              <Link className="text-[var(--color-primary)] underline" to="/staff">
+                Staff
+              </Link>
+              <Link className="text-[var(--color-primary)] underline" to="/classes">
+                Classes
+              </Link>
+              <Link className="text-[var(--color-primary)] underline" to="/academic-calendar">
+                Academic Calendar
+              </Link>
+              <Link className="text-[var(--color-primary)] underline" to="/admin">
+                Admin-only page
+              </Link>
+            </>
+          )}
+        </nav>
 
         <button
           type="button"

@@ -40,10 +40,10 @@ Each phase should end with something runnable end-to-end, even if narrow — nev
 
 **Goal:** the data model everything else (attendance, notifications) hangs off of.
 
-- [ ] Student and Staff entities, CRUD use cases (Application feature slices), FluentValidation rules
-- [ ] Class/Section structure, enrollment
-- [ ] Academic Calendar (terms, holidays, exceptions)
-- [ ] Frontend: student/staff list + detail views, forms via React Hook Form
+- [x] Student and Staff entities, CRUD use cases (Application feature slices), FluentValidation rules
+- [x] Class/Section structure, enrollment
+- [x] Academic Calendar (terms, holidays, exceptions)
+- [x] Frontend: student/staff list + detail views, forms via React Hook Form
 
 **Exit criteria:** an admin can create a term, enroll a student into a class, and see it reflected in the UI without touching code.
 
