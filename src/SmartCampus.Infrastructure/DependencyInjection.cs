@@ -24,6 +24,12 @@ public static class DependencyInjection
         services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
         services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IAcademicTermRepository, AcademicTermRepository>();
+        services.AddScoped<IClassRepository, ClassRepository>();
+        services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<IStaffRepository, StaffRepository>();
+
         return services;
     }
 }

@@ -8,25 +8,18 @@ using SmartCampus.Domain.Constants;
 
 namespace SmartCampus.Api.Controllers;
 
-[ApiController]
 [Route("api/v1/auth")]
 public sealed class AuthController(
     LoginUseCase loginUseCase,
-    IValidator<LoginRequest> loginRequestValidator) : ControllerBase
+    IValidator<LoginRequest> loginRequestValidator) : ApiControllerBase
 {
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<ActionResult<LoginResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
     {
-        var validationResult = await loginRequestValidator.ValidateAsync(request, cancellationToken);
-        if (!validationResult.IsValid)
+        if (await ValidateAsync(loginRequestValidator, request, cancellationToken) is { } validationError)
         {
-            foreach (var error in validationResult.Errors)
-            {
-                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-            }
-
-            return ValidationProblem(ModelState);
+            return validationError;
         }
 
         try
