@@ -25,12 +25,12 @@ Each phase should end with something runnable end-to-end, even if narrow — nev
 
 **Goal:** the two things every other feature depends on: who is logged in, and what does this school look like.
 
-- [ ] `SchoolSettings` / `BrandingSettings` / `IotSettings` strongly-typed config models, bound from environment variables, validated at startup (fail fast on missing values)
-- [ ] User entity, roles (Admin, Teacher, Staff, Parent, Student), password hashing
-- [ ] JWT issuance + validation middleware
-- [ ] Role-based authorization policies wired into the API
-- [ ] `/config` endpoint returning branding (name, logo URL, theme colors, timezone) for frontend consumption
-- [ ] Frontend: login flow, auth state in Zustand, protected routing, theme injecte d from `/config`
+- [x] `SchoolSettings` / `BrandingSettings` / `IotSettings` strongly-typed config models, bound from environment variables, validated at startup (fail fast on missing values)
+- [x] User entity, roles (Admin, Teacher, Staff, Parent, Student), password hashing
+- [x] JWT issuance + validation middleware
+- [x] Role-based authorization policies wired into the API
+- [x] `/config` endpoint returning branding (name, logo URL, theme colors, timezone) for frontend consumption
+- [x] Frontend: login flow, auth state in Zustand, protected routing, theme injected from `/config`
 
 **Exit criteria:** a seeded admin user can log in, see the school's branding rendered from config (not hardcoded), and reach a role-gated page.
 

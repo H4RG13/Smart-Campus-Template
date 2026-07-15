@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartCampus.Application.Common.Interfaces;
+using SmartCampus.Infrastructure.Identity;
 using SmartCampus.Infrastructure.Persistence;
+using SmartCampus.Infrastructure.Persistence.Repositories;
 
 namespace SmartCampus.Infrastructure;
 
@@ -16,6 +19,10 @@ public static class DependencyInjection
 
         services.AddHealthChecks()
             .AddDbContextCheck<AppDbContext>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
         return services;
     }
