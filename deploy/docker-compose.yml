@@ -43,6 +43,14 @@ services:
       Jwt__ExpiryMinutes: ${JWT__EXPIRYMINUTES}
       Seed__AdminEmail: ${SEED__ADMINEMAIL}
       Seed__AdminPassword: ${SEED__ADMINPASSWORD}
+      Smtp__Host: ${SMTP__HOST}
+      Smtp__Port: ${SMTP__PORT}
+      Smtp__Username: ${SMTP__USERNAME}
+      Smtp__Password: ${SMTP__PASSWORD}
+      Smtp__UseSsl: ${SMTP__USESSL}
+      Smtp__FromAddress: ${SMTP__FROMADDRESS}
+      Smtp__FromName: ${SMTP__FROMNAME}
+      Notifications__NotifyGuardiansOnAbsence: ${NOTIFICATIONS__NOTIFYGUARDIANSONABSENCE}
     ports:
       - "8080:8080"
 

@@ -21,6 +21,10 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     public DbSet<DeviceEvent> DeviceEvents => Set<DeviceEvent>();
     public DbSet<DeviceHeartbeat> DeviceHeartbeats => Set<DeviceHeartbeat>();
 
+    public DbSet<Guardian> Guardians => Set<Guardian>();
+    public DbSet<GuardianStudent> GuardianStudents => Set<GuardianStudent>();
+    public DbSet<NotificationLog> NotificationLogs => Set<NotificationLog>();
+
     // Further DbSets are added feature-by-feature as later PLAN.md phases introduce entities.
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

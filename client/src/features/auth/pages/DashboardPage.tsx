@@ -23,6 +23,9 @@ export function DashboardPage() {
           <Link className="text-[var(--color-primary)] underline" to="/attendance">
             Attendance
           </Link>
+          <Link className="text-[var(--color-primary)] underline" to="/reports">
+            Reports
+          </Link>
           {hasRole('Admin') && (
             <>
               <Link className="text-[var(--color-primary)] underline" to="/staff">
@@ -36,6 +39,12 @@ export function DashboardPage() {
               </Link>
               <Link className="text-[var(--color-primary)] underline" to="/devices">
                 Devices
+              </Link>
+              <Link className="text-[var(--color-primary)] underline" to="/guardians">
+                Guardians
+              </Link>
+              <Link className="text-[var(--color-primary)] underline" to="/notifications">
+                Notifications
               </Link>
               <Link className="text-[var(--color-primary)] underline" to="/admin">
                 Admin-only page

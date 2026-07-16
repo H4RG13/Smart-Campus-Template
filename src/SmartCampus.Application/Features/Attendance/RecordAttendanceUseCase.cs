@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using SmartCampus.Application.Common.Interfaces;
+using SmartCampus.Application.Features.Notifications;
 using SmartCampus.Configuration;
 using SmartCampus.Domain.Entities;
 using SmartCampus.Domain.Enums;
@@ -8,9 +9,11 @@ namespace SmartCampus.Application.Features.Attendance;
 
 public sealed class RecordAttendanceUseCase(
     IAttendanceRecordRepository attendanceRecordRepository,
+    IStudentRepository studentRepository,
     ICurrentUserAccessor currentUserAccessor,
     IUnitOfWork unitOfWork,
-    IOptions<SchoolSettings> schoolSettings)
+    IOptions<SchoolSettings> schoolSettings,
+    AbsenceNotificationService absenceNotificationService)
 {
     public async Task<AttendanceRecordDto> ExecuteAsync(RecordAttendanceRequest request, CancellationToken cancellationToken = default)
     {
@@ -41,6 +44,16 @@ public sealed class RecordAttendanceUseCase(
 
         attendanceRecordRepository.Add(record);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        if (status == AttendanceStatus.Absent)
+        {
+            var student = await studentRepository.GetByIdAsync(request.StudentId, cancellationToken);
+            if (student is not null)
+            {
+                await absenceNotificationService.NotifyAsync(
+                    student.Id, $"{student.FirstName} {student.LastName}", request.AttendanceDate, cancellationToken);
+            }
+        }
 
         return ToDto(record);
     }

@@ -48,6 +48,18 @@ builder.Services
     .ValidateDataAnnotations()
     .ValidateOnStart();
 
+builder.Services
+    .AddOptions<SmtpSettings>()
+    .Bind(builder.Configuration.GetSection(SmtpSettings.SectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services
+    .AddOptions<NotificationSettings>()
+    .Bind(builder.Configuration.GetSection(NotificationSettings.SectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();

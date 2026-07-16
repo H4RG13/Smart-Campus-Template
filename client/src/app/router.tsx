@@ -11,6 +11,9 @@ import { ClassesPage } from '../features/classes/pages/ClassesPage';
 import { AcademicCalendarPage } from '../features/academic-calendar/pages/AcademicCalendarPage';
 import { AttendanceDashboardPage } from '../features/attendance/pages/AttendanceDashboardPage';
 import { DevicesPage } from '../features/devices/pages/DevicesPage';
+import { GuardiansPage } from '../features/guardians/pages/GuardiansPage';
+import { NotificationsPage } from '../features/notifications/pages/NotificationsPage';
+import { ReportsPage } from '../features/reports/pages/ReportsPage';
 import { ProtectedRoute } from '../shared/components/ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -96,6 +99,30 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute requireRole="Admin">
             <DevicesPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/guardians',
+        element: (
+          <ProtectedRoute requireRole="Admin">
+            <GuardiansPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/notifications',
+        element: (
+          <ProtectedRoute requireRole="Admin">
+            <NotificationsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/reports',
+        element: (
+          <ProtectedRoute>
+            <ReportsPage />
           </ProtectedRoute>
         ),
       },

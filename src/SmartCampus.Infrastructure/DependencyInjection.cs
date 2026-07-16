@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartCampus.Application.Common.Interfaces;
 using SmartCampus.Infrastructure.Identity;
+using SmartCampus.Infrastructure.Messaging;
 using SmartCampus.Infrastructure.Persistence;
 using SmartCampus.Infrastructure.Persistence.Interceptors;
 using SmartCampus.Infrastructure.Persistence.Repositories;
@@ -39,6 +40,9 @@ public static class DependencyInjection
         services.AddScoped<IDeviceRepository, DeviceRepository>();
         services.AddScoped<IDeviceEventRepository, DeviceEventRepository>();
         services.AddScoped<IDeviceHeartbeatRepository, DeviceHeartbeatRepository>();
+        services.AddScoped<IGuardianRepository, GuardianRepository>();
+        services.AddScoped<INotificationLogRepository, NotificationLogRepository>();
+        services.AddScoped<IEmailSender, SmtpEmailSender>();
 
         return services;
     }

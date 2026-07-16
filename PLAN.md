@@ -81,11 +81,11 @@ Each phase should end with something runnable end-to-end, even if narrow — nev
 
 **Goal:** close the loop to parents/staff and produce the reports schools actually ask for.
 
-- [ ] Notification channel abstraction (SMTP first), triggered on absence per school-configurable rules
-- [ ] Standard attendance reports (daily/weekly/monthly, exportable)
-- [ ] Clearly isolated `Reports/Custom/` area for the first school's bespoke report needs (proves out the extension pattern before it's needed twice)
+- [x] Notification channel abstraction (SMTP first), triggered on absence per school-configurable rules
+- [x] Standard attendance reports (daily/weekly/monthly, exportable)
+- [x] Clearly isolated `Reports/Custom/` area for the first school's bespoke report needs (proves out the extension pattern before it's needed twice)
 
-**Exit criteria:** a parent receives an absence email, and an admin can export a standard attendance report.
+**Exit criteria:** a parent receives an absence email, and an admin can export a standard attendance report. **Verified for real** — spun up a MailHog SMTP catcher, marked a student absent, and confirmed the email actually arrived (not just a mocked/logged send); CSV export confirmed via the frontend proxy with the correct `Content-Disposition` header. Added Guardian/GuardianStudent (deferred from Phase 2) since notifications need someone to notify.
 
 ---
 
