@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SmartCampus.Application.Common.Interfaces;
 using SmartCampus.Infrastructure.Identity;
 using SmartCampus.Infrastructure.Persistence;
+using SmartCampus.Infrastructure.Persistence.Interceptors;
 using SmartCampus.Infrastructure.Persistence.Repositories;
 
 namespace SmartCampus.Infrastructure;
@@ -15,7 +16,12 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("Postgres")
             ?? throw new InvalidOperationException("Connection string 'Postgres' is not configured.");
 
-        services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+        services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
+        services.AddScoped<AuditSaveChangesInterceptor>();
+
+        services.AddDbContext<AppDbContext>((serviceProvider, options) => options
+            .UseNpgsql(connectionString)
+            .AddInterceptors(serviceProvider.GetRequiredService<AuditSaveChangesInterceptor>()));
 
         services.AddHealthChecks()
             .AddDbContextCheck<AppDbContext>();
@@ -29,6 +35,7 @@ public static class DependencyInjection
         services.AddScoped<IClassRepository, ClassRepository>();
         services.AddScoped<IStudentRepository, StudentRepository>();
         services.AddScoped<IStaffRepository, StaffRepository>();
+        services.AddScoped<IAttendanceRecordRepository, AttendanceRecordRepository>();
 
         return services;
     }

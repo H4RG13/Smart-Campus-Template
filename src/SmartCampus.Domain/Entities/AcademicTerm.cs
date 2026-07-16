@@ -46,4 +46,7 @@ public sealed class AcademicTerm
     }
 
     public void Deactivate() => IsActive = false;
+
+    public bool IsHoliday(DateOnly date) =>
+        _exceptions.Any(e => e.Date == date && e.Type == Enums.CalendarExceptionType.Holiday);
 }

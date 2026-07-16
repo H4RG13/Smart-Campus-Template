@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using SmartCampus.Application.Features.AcademicCalendar;
+using SmartCampus.Application.Features.Attendance;
 using SmartCampus.Application.Features.Classes;
 using SmartCampus.Application.Features.Identity;
 using SmartCampus.Application.Features.Staff;
@@ -29,6 +30,11 @@ public static class DependencyInjection
 
         services.AddScoped<CreateStaffUseCase>();
         services.AddScoped<GetStaffListUseCase>();
+
+        services.AddScoped<RecordAttendanceUseCase>();
+        services.AddScoped<CorrectAttendanceUseCase>();
+        services.AddScoped<GetAttendanceRecordsUseCase>();
+        services.AddScoped<GetAttendanceSummaryUseCase>();
 
         return services;
     }

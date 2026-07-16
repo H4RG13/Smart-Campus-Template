@@ -20,6 +20,9 @@ export function DashboardPage() {
           <Link className="text-[var(--color-primary)] underline" to="/students">
             Students
           </Link>
+          <Link className="text-[var(--color-primary)] underline" to="/attendance">
+            Attendance
+          </Link>
           {hasRole('Admin') && (
             <>
               <Link className="text-[var(--color-primary)] underline" to="/staff">
