@@ -14,6 +14,9 @@ public sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbCon
     public DbSet<Student> Students => Set<Student>();
     public DbSet<Staff> Staff => Set<Staff>();
 
+    public DbSet<AttendanceRecord> AttendanceRecords => Set<AttendanceRecord>();
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+
     // Further DbSets are added feature-by-feature as later PLAN.md phases introduce entities.
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

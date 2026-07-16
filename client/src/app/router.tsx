@@ -9,6 +9,7 @@ import { StudentDetailPage } from '../features/students/pages/StudentDetailPage'
 import { StaffListPage } from '../features/staff/pages/StaffListPage';
 import { ClassesPage } from '../features/classes/pages/ClassesPage';
 import { AcademicCalendarPage } from '../features/academic-calendar/pages/AcademicCalendarPage';
+import { AttendanceDashboardPage } from '../features/attendance/pages/AttendanceDashboardPage';
 import { ProtectedRoute } from '../shared/components/ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -78,6 +79,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute requireRole="Admin">
             <AcademicCalendarPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/attendance',
+        element: (
+          <ProtectedRoute>
+            <AttendanceDashboardPage />
           </ProtectedRoute>
         ),
       },

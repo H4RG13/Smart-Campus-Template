@@ -53,11 +53,11 @@ Each phase should end with something runnable end-to-end, even if narrow — nev
 
 **Goal:** the core business-rule module — this is where lateness thresholds, absence policies, and manual overrides live.
 
-- [ ] Attendance entity + rules (on-time/late/absent thresholds, configurable per school via `SchoolSettings`)
-- [ ] Manual check-in/override use cases + RBAC (teacher/admin only)
-- [ ] Academic Calendar integration (no attendance expected on holidays)
-- [ ] Audit trail hook (who marked/changed an attendance record)
-- [ ] Frontend: attendance dashboard, manual entry UI, ECharts summary (daily/weekly attendance rate)
+- [x] Attendance entity + rules (on-time/late/absent thresholds, configurable per school via `SchoolSettings`)
+- [x] Manual check-in/override use cases + RBAC (teacher/admin only)
+- [x] Academic Calendar integration (no attendance expected on holidays)
+- [x] Audit trail hook (who marked/changed an attendance record)
+- [x] Frontend: attendance dashboard, manual entry UI, ECharts summary (daily/weekly attendance rate)
 
 **Exit criteria:** attendance can be recorded manually end-to-end, respecting calendar and lateness config, with a visible audit trail.
 

@@ -34,6 +34,7 @@ services:
       Branding__Timezone: ${BRANDING__TIMEZONE}
       School__AttendanceLateThresholdMinutes: ${SCHOOL__ATTENDANCELATETHRESHOLDMINUTES}
       School__DefaultTimezone: ${SCHOOL__DEFAULTTIMEZONE}
+      School__SchoolDayStartTime: ${SCHOOL__SCHOOLDAYSTARTTIME}
       Iot__HeartbeatIntervalSeconds: ${IOT__HEARTBEATINTERVALSECONDS}
       Iot__OfflineThresholdMultiplier: ${IOT__OFFLINETHRESHOLDMULTIPLIER}
       Jwt__SigningKey: ${JWT_SIGNING_KEY}

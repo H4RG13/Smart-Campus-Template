@@ -6,4 +6,5 @@ public sealed class SchoolSettings
 
     public required int AttendanceLateThresholdMinutes { get; init; }
     public required string DefaultTimezone { get; init; }
+    public required TimeOnly SchoolDayStartTime { get; init; }
 }
