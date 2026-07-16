@@ -93,15 +93,23 @@ Each phase should end with something runnable end-to-end, even if narrow — nev
 
 **Goal:** everything needed to actually hand this to School #1, not just run it in dev.
 
-- [ ] Rate limiting on public/device-facing endpoints
-- [ ] Secrets management pass (no secrets in repo, `.env` + Docker secrets documented)
-- [ ] NGINX + Let's Encrypt SSL in `deploy/`
-- [ ] Rename/clone checklist scripted and tested against a throwaway clone
-- [ ] Backup/restore procedure for the Postgres volume documented
-- [ ] Load test at realistic single-school scale (hundreds–low thousands of users, tens of devices)
-- [ ] Testing Strategy, Monitoring, Logging, CI/CD deliverables written up (see remaining deliverables list)
+- [x] Rate limiting on public/device-facing endpoints
+- [x] Secrets management pass (no secrets in repo, `.env` + Docker secrets documented)
+- [x] NGINX + Let's Encrypt SSL in `deploy/`
+- [x] Rename/clone checklist scripted and tested against a throwaway clone
+- [x] Backup/restore procedure for the Postgres volume documented
+- [x] Load test at realistic single-school scale (hundreds–low thousands of users, tens of devices)
+- [x] Testing Strategy, Monitoring, Logging, CI/CD deliverables written up (see remaining deliverables list)
 
 **Exit criteria:** a fresh clone can go from "requirement gathering" to "deployed and training-ready" following only the documented checklist, with no undocumented manual steps.
+
+**Verification notes:**
+- **Rate limiting**: verified live — hammered `/auth/login` and a device endpoint past their configured limits and confirmed 429s at exactly the right request count.
+- **NGINX/SSL**: found and fixed a real, previously-undiscovered bug — `Dockerfile.api`'s `dotnet publish --no-restore` failed to find a transitive analyzer package (restore and publish evaluated the dependency graph differently); removing `--no-restore` fixed it. Then verified the *entire* stack (postgres + api + nginx with a dummy cert) end-to-end over real HTTPS on the actual Compose network — frontend serving, API reverse-proxying, and HTTP→HTTPS redirect all confirmed working. Real Let's Encrypt issuance itself requires a public domain, not available in this environment — `deploy/init-ssl.sh` implements the standard dummy-cert bootstrap pattern for that step.
+- **Rename/clone checklist**: `scripts/rename-project.sh` run against a full throwaway copy of the repo (renamed to "Riverside"); both `dotnet build` and `npm run build` succeeded afterward with zero errors.
+- **Backup/restore**: backed up the live dev database, deleted data, restored, and confirmed exact row counts matched pre-deletion.
+- **Load test**: ran `scripts/load-test.js` (k6) against the fully containerized stack — see `docs/LOAD_TEST_RESULTS.md`. p95 latency 23.57ms, error rate 0.44%, well within target. Along the way, surfaced and fixed a real tuning issue: the original login rate limit (10/min/IP) was too aggressive for a school where multiple staff share one NAT'd IP; raised to 20/min with the reasoning documented next to the policy in `Program.cs`.
+- **Testing/Monitoring/Logging/CI-CD docs**: already written (see `docs/TESTING_STRATEGY.md`, `docs/MONITORING.md`, `docs/LOGGING.md`, `docs/CICD.md`) during the initial architecture pass and still accurate against the shipped implementation.
 
 ---
 

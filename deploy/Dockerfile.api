@@ -10,7 +10,7 @@ COPY src/SmartCampus.Api/SmartCampus.Api.csproj src/SmartCampus.Api/
 RUN dotnet restore src/SmartCampus.Api/SmartCampus.Api.csproj
 
 COPY src/ src/
-RUN dotnet publish src/SmartCampus.Api/SmartCampus.Api.csproj -c Release -o /app --no-restore
+RUN dotnet publish src/SmartCampus.Api/SmartCampus.Api.csproj -c Release -o /app
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
