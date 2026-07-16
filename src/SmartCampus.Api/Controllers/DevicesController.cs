@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Net.Http.Headers;
 using SmartCampus.Application.Common.Exceptions;
 using SmartCampus.Application.Features.Devices;
@@ -46,6 +47,7 @@ public sealed class DevicesController(
 
     [HttpPost("{deviceId:guid}/events")]
     [AllowAnonymous]
+    [EnableRateLimiting("device")]
     public async Task<ActionResult<SubmitDeviceEventResponse>> SubmitEvent(
         Guid deviceId,
         SubmitDeviceEventRequest request,
@@ -69,6 +71,7 @@ public sealed class DevicesController(
 
     [HttpPost("{deviceId:guid}/heartbeat")]
     [AllowAnonymous]
+    [EnableRateLimiting("device")]
     public async Task<IActionResult> Heartbeat(Guid deviceId, SubmitHeartbeatRequest request, CancellationToken cancellationToken)
     {
         if (!TryGetDeviceToken(out var token))

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using SmartCampus.Application.Common.Exceptions;
 using SmartCampus.Application.Features.Identity;
 using SmartCampus.Domain.Constants;
@@ -15,6 +16,7 @@ public sealed class AuthController(
 {
     [HttpPost("login")]
     [AllowAnonymous]
+    [EnableRateLimiting("auth")]
     public async Task<ActionResult<LoginResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
     {
         if (await ValidateAsync(loginRequestValidator, request, cancellationToken) is { } validationError)

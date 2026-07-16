@@ -62,13 +62,15 @@ ATTENDANCE_LATE_THRESHOLD_MINUTES=...
 
 ## SSL
 
-Let's Encrypt via Certbot, one certificate per school's domain, renewed automatically. NGINX config template in `deploy/nginx/` is parameterized by the school's domain name (substituted during the rename/clone step), not hardcoded.
+Let's Encrypt via Certbot, one certificate per school's domain, renewed automatically. `deploy/nginx/templates/default.conf.template` is parameterized by `${DOMAIN_NAME}` (from that school's `.env`) via nginx's built-in envsubst-on-templates support — no manual editing per school.
+
+First issuance is a one-time bootstrap: run `deploy/init-ssl.sh` after `.env` has the real `DOMAIN_NAME`/`CERTBOT_EMAIL`. It resolves the standard chicken-and-egg problem (nginx needs a cert to start; Certbot needs nginx running to serve the HTTP-01 challenge) by starting nginx with a throwaway self-signed cert, requesting the real one, then reloading nginx onto it. After that, the `certbot` service in `docker-compose.yml` renews automatically every 12 hours (a no-op outside the renewal window).
 
 ## Backup strategy
 
-- **Database:** nightly `pg_dump` to a local file on the VPS, rotated (e.g. keep 14 daily + 6 monthly), additionally shipped off-box to the agency's backup storage (e.g. a shared S3/MinIO bucket used only for backup egress, not runtime — this is the one intentional exception to "nothing shared at runtime," since it's a batch job, not a live dependency).
+- **Database:** `scripts/backup-postgres.sh` runs nightly via host cron (`0 2 * * * scripts/backup-postgres.sh /var/backups/smartcampus`), producing a gzipped `pg_dump` and pruning anything older than 14 days. For the 6-monthly retention, point a separate off-box sync (rsync/rclone to the agency's backup storage — a shared bucket used only for backup egress, not runtime; the one intentional exception to "nothing shared at runtime," since it's a batch job, not a live dependency) at the same backup directory.
 - **MinIO volume:** included in the same off-box backup rotation.
-- **Restore procedure:** documented step-by-step in `deploy/` (stop `api`, restore `pg_dump`, restart) and tested against a throwaway clone before first production deployment (`PLAN.md` Phase 6 exit criteria).
+- **Restore procedure:** `scripts/restore-postgres.sh <backup-file>` — stops `api`, drops and recreates the schema, restores the dump, restarts `api`. Requires typing the database name to confirm (destructive) unless `FORCE=1` is set. **Verified for real**: backed up a live database, deleted data, restored from the backup, and confirmed exact row counts matched pre-deletion — not just that the script exits 0.
 
 ## Deploy process
 
