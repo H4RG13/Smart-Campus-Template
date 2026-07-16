@@ -12,7 +12,9 @@ public sealed class StudentsController(
     CreateStudentUseCase createStudentUseCase,
     GetStudentsUseCase getStudentsUseCase,
     GetStudentByIdUseCase getStudentByIdUseCase,
-    IValidator<CreateStudentRequest> createStudentValidator) : ApiControllerBase
+    AssignRfidTagUseCase assignRfidTagUseCase,
+    IValidator<CreateStudentRequest> createStudentValidator,
+    IValidator<AssignRfidTagRequest> assignRfidTagValidator) : ApiControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<StudentDto>>> GetStudents(CancellationToken cancellationToken)
@@ -38,5 +40,18 @@ public sealed class StudentsController(
 
         var student = await createStudentUseCase.ExecuteAsync(request, cancellationToken);
         return CreatedAtAction(nameof(GetStudent), new { id = student.Id }, student);
+    }
+
+    [HttpPost("{id:guid}/rfid-tag")]
+    [Authorize(Roles = $"{RoleNames.Admin},{RoleNames.Staff}")]
+    public async Task<ActionResult<StudentDto>> AssignRfidTag(Guid id, AssignRfidTagRequest request, CancellationToken cancellationToken)
+    {
+        if (await ValidateAsync(assignRfidTagValidator, request, cancellationToken) is { } validationError)
+        {
+            return validationError;
+        }
+
+        var student = await assignRfidTagUseCase.ExecuteAsync(id, request, cancellationToken);
+        return student is null ? NotFound() : Ok(student);
     }
 }

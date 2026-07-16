@@ -10,6 +10,7 @@ import { StaffListPage } from '../features/staff/pages/StaffListPage';
 import { ClassesPage } from '../features/classes/pages/ClassesPage';
 import { AcademicCalendarPage } from '../features/academic-calendar/pages/AcademicCalendarPage';
 import { AttendanceDashboardPage } from '../features/attendance/pages/AttendanceDashboardPage';
+import { DevicesPage } from '../features/devices/pages/DevicesPage';
 import { ProtectedRoute } from '../shared/components/ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -87,6 +88,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <AttendanceDashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/devices',
+        element: (
+          <ProtectedRoute requireRole="Admin">
+            <DevicesPage />
           </ProtectedRoute>
         ),
       },

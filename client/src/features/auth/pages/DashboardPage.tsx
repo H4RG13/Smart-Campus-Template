@@ -34,6 +34,9 @@ export function DashboardPage() {
               <Link className="text-[var(--color-primary)] underline" to="/academic-calendar">
                 Academic Calendar
               </Link>
+              <Link className="text-[var(--color-primary)] underline" to="/devices">
+                Devices
+              </Link>
               <Link className="text-[var(--color-primary)] underline" to="/admin">
                 Admin-only page
               </Link>

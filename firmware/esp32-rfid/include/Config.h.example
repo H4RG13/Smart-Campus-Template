@@ -1,0 +1,31 @@
+// Copy this file to Config.h and fill in real values before building.
+// Config.h is gitignored — never commit real WiFi credentials or a device token.
+#pragma once
+
+// --- WiFi ---
+#define WIFI_SSID "school-wifi-ssid"
+#define WIFI_PASSWORD "school-wifi-password"
+
+// --- SmartCampus API ---
+// The school's backend, reachable from the device's network. In production this is
+// the school's domain over HTTPS (see docs/DEPLOYMENT_ARCHITECTURE.md); during bench
+// testing against a local dev server it's the machine's LAN IP and port, e.g.
+// "http://192.168.1.50:5080".
+#define API_BASE_URL "https://school.example.com/api/v1"
+
+// Issued once by POST /devices/register (see docs/API_SPECIFICATION.md) — the backend
+// only ever shows this at registration time, so it must be copied here immediately.
+#define DEVICE_ID "00000000-0000-0000-0000-000000000000"
+#define DEVICE_AUTH_TOKEN "replace-with-the-token-shown-at-registration"
+
+// --- Hardware pins (MFRC522 over SPI) ---
+#define RFID_SS_PIN 5
+#define RFID_RST_PIN 22
+#define LED_GREEN_PIN 25
+#define LED_RED_PIN 26
+#define BUZZER_PIN 27
+
+// --- Timing ---
+#define HEARTBEAT_INTERVAL_MS 60000  // must match School:Iot:HeartbeatIntervalSeconds
+#define QUEUE_FLUSH_INTERVAL_MS 5000
+#define MAX_QUEUED_EVENTS 200

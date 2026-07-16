@@ -16,4 +16,7 @@ public sealed class StudentRepository(AppDbContext dbContext) : IStudentReposito
 
     public Task<bool> StudentNumberExistsAsync(string studentNumber, CancellationToken cancellationToken = default) =>
         dbContext.Students.AnyAsync(s => s.StudentNumber == studentNumber, cancellationToken);
+
+    public Task<Student?> GetByRfidTagAsync(string rfidTagId, CancellationToken cancellationToken = default) =>
+        dbContext.Students.SingleOrDefaultAsync(s => s.RfidTagId == rfidTagId, cancellationToken);
 }

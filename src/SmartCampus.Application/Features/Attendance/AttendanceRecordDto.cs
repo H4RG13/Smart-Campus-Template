@@ -10,6 +10,7 @@ public sealed class AttendanceRecordDto
     public DateTime? CheckInAtUtc { get; init; }
     public required AttendanceStatus Status { get; init; }
     public Guid? RecordedByUserId { get; init; }
+    public Guid? DeviceEventId { get; init; }
     public string? Notes { get; init; }
     public required DateTime CreatedAtUtc { get; init; }
 }

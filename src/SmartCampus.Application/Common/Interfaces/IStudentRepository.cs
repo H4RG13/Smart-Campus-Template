@@ -8,4 +8,5 @@ public interface IStudentRepository
     Task<Student?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<Student>> ListAsync(CancellationToken cancellationToken = default);
     Task<bool> StudentNumberExistsAsync(string studentNumber, CancellationToken cancellationToken = default);
+    Task<Student?> GetByRfidTagAsync(string rfidTagId, CancellationToken cancellationToken = default);
 }
