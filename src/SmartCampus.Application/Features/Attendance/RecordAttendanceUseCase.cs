@@ -53,6 +53,7 @@ public sealed class RecordAttendanceUseCase(
         CheckInAtUtc = record.CheckInAtUtc,
         Status = record.Status,
         RecordedByUserId = record.RecordedByUserId,
+        DeviceEventId = record.DeviceEventId,
         Notes = record.Notes,
         CreatedAtUtc = record.CreatedAtUtc,
     };

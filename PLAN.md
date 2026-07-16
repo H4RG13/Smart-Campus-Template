@@ -67,13 +67,13 @@ Each phase should end with something runnable end-to-end, even if narrow — nev
 
 **Goal:** ESP32 devices can authenticate, submit attendance events, and report health — with all business logic staying server-side.
 
-- [ ] Device registration + per-device auth token issuance
-- [ ] Ingestion endpoint: validate device identity, dedupe by device event ID (idempotency), apply Attendance Engine rules (not duplicated in firmware)
-- [ ] Heartbeat/health endpoint + basic device status view
-- [ ] Firmware (`firmware/esp32-rfid/`): RFID read, device auth, offline queue + retry, heartbeat, LED/buzzer feedback, firmware version reporting
-- [ ] Frontend: device status dashboard (online/offline, last heartbeat)
+- [x] Device registration + per-device auth token issuance
+- [x] Ingestion endpoint: validate device identity, dedupe by device event ID (idempotency), apply Attendance Engine rules (not duplicated in firmware)
+- [x] Heartbeat/health endpoint + basic device status view
+- [x] Firmware (`firmware/esp32-rfid/`): RFID read, device auth, offline queue + retry, heartbeat, LED/buzzer feedback, firmware version reporting — **written to match the protocol but not bench-tested on real hardware; see the firmware's own README for known gaps**
+- [x] Frontend: device status dashboard (online/offline, last heartbeat)
 
-**Exit criteria:** a physical (or bench-test) ESP32 scanning a tag produces a real attendance record through the same Attendance Engine used by manual entry, survives a simulated network drop (offline queue + retry), and shows up on the device dashboard.
+**Exit criteria:** a physical (or bench-test) ESP32 scanning a tag produces a real attendance record through the same Attendance Engine used by manual entry, survives a simulated network drop (offline queue + retry), and shows up on the device dashboard. **Verified via curl simulation of the device protocol** (register → scan → attendance record created with the same `AttendanceStatusCalculator` as manual entry, duplicate `deviceEventId` rejected, unknown tag rejected, device shows online/offline correctly) — the actual firmware has not been run against physical hardware.
 
 ---
 
